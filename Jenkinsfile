@@ -45,7 +45,6 @@ pipeline {
                     steps {
                         script{
                             echo "Build"
-                            )
                         }
                         script {
                             if (env.BRANCH_NAME != "master") {
