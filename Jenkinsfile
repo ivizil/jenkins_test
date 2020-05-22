@@ -45,6 +45,7 @@ pipeline {
                     steps {
                         script{
                             echo "Build"
+                            
                         }
                         script {
                             if (env.BRANCH_NAME != "master") {
@@ -81,9 +82,9 @@ pipeline {
         
     }
     post {
-        always {
+        // always {
                 //sh("docker rmi ${BASE_IMAGE}:latest ${BASE_IMAGE_REF} || true")
-        }
+        // }
         success{
         echo "Success"
         }
