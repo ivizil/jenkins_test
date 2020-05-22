@@ -21,7 +21,7 @@ pipeline {
                         userRemoteConfigs: [
                             [
                                 //credentialsId: 'github_bot_creds',
-                                url: 'https://github.com/Lyft-Minsk/transit-static-workflows-msq'
+                                url: 'https://github.com/ivizil/jenkins_test'
                             ]
                         ]
                     ])
@@ -32,7 +32,7 @@ pipeline {
                         script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
                         returnStdout: true
                     )
-                    )
+                    
                 }
             }
         }
@@ -45,11 +45,11 @@ pipeline {
                     steps {
                         script{
                             echo "Build"
-                            )
+                            
                         }
                         script {
                             if (env.BRANCH_NAME != "master") {
-                                env.BASE_IMAGE_TAG = env.GIT_COMMIT
+                                echo "Non master" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
                             }
                         }
                     }
@@ -63,7 +63,7 @@ pipeline {
                         stage("Base By Commit Tag") {
                            steps {
                                 script {
-                                    base_image.push()
+                                    echo "push image " // base_image.push()
                                 }
                            }
                         }
@@ -71,7 +71,7 @@ pipeline {
                             when { branch 'master' }
                             steps {
                                 script {
-                                    base_image.push('latest')
+                                    echo "push image last" //base_image.push('latest')
                                 }
                             }
                         }
@@ -82,9 +82,9 @@ pipeline {
         
     }
     post {
-        always {
+        // always {
                 //sh("docker rmi ${BASE_IMAGE}:latest ${BASE_IMAGE_REF} || true")
-        }
+        // }
         success{
         echo "Success"
         }
