@@ -54,7 +54,7 @@ pipeline {
                         //     echo "Branch_name (should be master) - ${env.BASE_IMAGE_AFFECTED}"
 
                         // ) 
-                    }   
+                    // }    
                 }
             }
         }
@@ -100,8 +100,7 @@ pipeline {
                     }
                 }
             }
-        }
-        
+        }   
     }
     post {
         // always {
