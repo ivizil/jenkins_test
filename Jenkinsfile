@@ -39,7 +39,7 @@ pipeline {
                         env.BASE_IMAGE_AFFECTED = sh(
                         script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
                         returnStdout: true)
-
+                        echo "BASE_IMAGE_AFFECTED -  ${env.BASE_IMAGE_AFFECTED}"
                         // if (env.BRANCH_NAME != 'master') {
                         //     echo "Branch_name (should be non master)- ${env.BRANCH_NAME}"
                         //     env.BASE_IMAGE_AFFECTED = sh(
