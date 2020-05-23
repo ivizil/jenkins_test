@@ -30,10 +30,10 @@ pipeline {
                 script {
                         if (env.BRANCH_NAME != 'master') {
                             env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master").trim()
-                            echo "Non master ${DIFF}"
+                            echo "Non master ${env.DIFF}"
                         } else {
                             env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
-                            echo "Master ${DIFF}"
+                            echo "Master ${env.DIFF}"
                         }
 
                         // if (env.BRANCH_NAME != 'master') {
