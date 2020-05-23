@@ -1,3 +1,30 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@ivizil 
+ivizil
+/
+jenkins_test
+1
+00
+ Code
+ Issues 0
+ Pull requests 0 Actions
+ Projects 0
+ Wiki
+ Security 0
+ Insights
+ Settings
+jenkins_test/Jenkinsfile
+@ivizil ivizil Update jenkinsfile
+8022e68 yesterday
+98 lines (93 sloc)  3.09 KB
+  
 #!groovy
 
 pipeline {
@@ -28,34 +55,11 @@ pipeline {
                 }
                 // getting files changed in current branch for base and tests images
                 script {
-                        // if (env.BRANCH_NAME != 'master') {
-                        //     env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master").trim()
-                        //     echo "Non master ${env.DIFF}"
-                        // } else {
-                        //     env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
-                        //     echo "Master ${env.DIFF}"
-                        // }
-
-                        env.BASE_IMAGE_AFFECTED = sh(
+                    env.BASE_IMAGE_AFFECTED = sh(
                         script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
-                        returnStdout: true)
-                        echo "BASE_IMAGE_AFFECTED -  ${env.BASE_IMAGE_AFFECTED}"
-                        echo "Branch -  -  ${env.BRANCH_NAME}"
-                        // if (env.BRANCH_NAME != 'master') {
-                        //     echo "Branch_name (should be non master)- ${env.BRANCH_NAME}"
-                        //     env.BASE_IMAGE_AFFECTED = sh(
-                        // script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
-                        // returnStdout: true
-                        // )
-                        // } else {
-                        //     echo "Branch_name (should be master) - ${env.BRANCH_NAME}"
-                        //     env.BASE_IMAGE_AFFECTED = sh(
-                        // script: "git diff --name-only origin/master^ | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
-                        // returnStdout: true
-                        //     echo "Branch_name (should be master) - ${env.BASE_IMAGE_AFFECTED}"
-
-                        // ) 
-                    // }    
+                        returnStdout: true
+                    )
+                    
                 }
             }
         }
@@ -68,7 +72,7 @@ pipeline {
                     steps {
                         script{
                             echo "Build"
-                            
+                            )
                         }
                         script {
                             if (env.BRANCH_NAME != "master") {
@@ -101,12 +105,13 @@ pipeline {
                     }
                 }
             }
-        }   
+        }
+        
     }
     post {
-        // always {
+        always {
                 //sh("docker rmi ${BASE_IMAGE}:latest ${BASE_IMAGE_REF} || true")
-        // }
+        }
         success{
         echo "Success"
         }
@@ -118,3 +123,15 @@ pipeline {
         }
     }
 }
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
