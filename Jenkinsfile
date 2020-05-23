@@ -33,7 +33,7 @@ pipeline {
                             echo "Non master ${DIFF}"
                         } else {
                             DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
-                            echo "Non master ${DIFF}"
+                            echo "Master ${DIFF}"
                         }
 
                         if (env.BRANCH_NAME != 'master') {
