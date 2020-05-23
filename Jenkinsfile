@@ -28,13 +28,17 @@ pipeline {
                 }
                 // getting files changed in current branch for base and tests images
                 script {
-                        if (env.BRANCH_NAME != 'master') {
-                            env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master").trim()
-                            echo "Non master ${env.DIFF}"
-                        } else {
-                            env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
-                            echo "Master ${env.DIFF}"
-                        }
+                        // if (env.BRANCH_NAME != 'master') {
+                        //     env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master").trim()
+                        //     echo "Non master ${env.DIFF}"
+                        // } else {
+                        //     env.DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
+                        //     echo "Master ${env.DIFF}"
+                        // }
+
+                        env.BASE_IMAGE_AFFECTED = sh(
+                        script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
+                        returnStdout: true)
 
                         // if (env.BRANCH_NAME != 'master') {
                         //     echo "Branch_name (should be non master)- ${env.BRANCH_NAME}"
@@ -50,15 +54,13 @@ pipeline {
                         //     echo "Branch_name (should be master) - ${env.BASE_IMAGE_AFFECTED}"
 
                         // ) 
-                        // }
-                    
-                    
+                    }   
                 }
             }
         }
         stage("Base Image") {
             when {
-                    expression { env.DIFF.toInteger() > 0 }
+                    expression { env.BASE_IMAGE_AFFECTED.toInteger() > 0 }
             }
             stages {
                 stage("Build Base Image") {
