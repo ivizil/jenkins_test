@@ -28,38 +28,15 @@ pipeline {
                 }
                 // getting files changed in current branch for base and tests images
                 script {
-                        if (env.BRANCH_NAME != 'master') {
-                            DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master").trim()
-                            echo "Non master ${DIFF}"
-                        } else {
-                            DIFF = sh(returnStdout: true, script: "git diff --name-only origin/master^").trim() 
-                            echo "Master ${DIFF}"
-                        }
-
-                        if (env.BRANCH_NAME != 'master') {
-                            echo "Branch_name (should be non master)- ${env.BRANCH_NAME}"
-                            env.BASE_IMAGE_AFFECTED = sh(
+                        env.BASE_IMAGE_AFFECTED = sh(
                         script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
                         returnStdout: true)
-                             echo "Branch_name (should non master) - ${env.BASE_IMAGE_AFFECTED}"
-                        
-                        } else {
-                            echo "Branch_name (should be master) - ${env.BRANCH_NAME}"
-                            env.BASE_IMAGE_AFFECTED = sh(
-                        script: "git diff --name-only origin/master^ | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
-                        returnStdout: true)
-                            echo "Branch_name (should be master) - ${env.BASE_IMAGE_AFFECTED}"
-
-                        
-                        }
-                    
-                    
                 }
             }
         }
         stage("Base Image") {
             when {
-                    expression { env.BASE_IMAGE_AFFECTED.toInteger() > 0 || env.BRANCH_NAME == 'master'}
+                    expression { env.BASE_IMAGE_AFFECTED.toInteger() > 0 }
             }
             stages {
                 stage("Build Base Image") {
