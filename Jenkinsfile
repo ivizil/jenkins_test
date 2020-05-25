@@ -31,7 +31,7 @@ pipeline {
                         env.BASE_IMAGE_AFFECTED = sh(
                         script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
                         returnStdout: true)
-                        echo "BIA - ${env.BASE_IMAGE_AFFECTED}
+                        echo "BIA - ${env.BASE_IMAGE_AFFECTED}"
                 }
             }
         }
