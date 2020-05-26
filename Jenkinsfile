@@ -32,10 +32,10 @@ pipeline {
                                 echo "Master branch" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
                                 env.BASE_IMAGE_AFFECTED = sh(script: "git diff --name-only origin/master^ | grep -E '${BASE_IMAGE_TARGETS}' | wc -l", returnStdout: true)
                                 //echo "BIA - ${env.BASE_IMAGE_AFFECTED}"
-                            }
-                        else{
+                        }else{
                                 echo "Non master branch" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
                                 env.BASE_IMAGE_AFFECTED = sh(script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l", returnStdout: true)      
+                    }
                 }
             }
         }
@@ -82,8 +82,7 @@ pipeline {
                 }
             }
         }
-      } 
-    }
+    } 
     post {
         // always {
                 //sh("docker rmi ${BASE_IMAGE}:latest ${BASE_IMAGE_REF} || true")
