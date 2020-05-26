@@ -28,10 +28,14 @@ pipeline {
                 }
                 // getting files changed in current branch for base and tests images
                 script {
-                        env.BASE_IMAGE_AFFECTED = sh(
-                        script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l",
-                        returnStdout: true)
-                        echo "BIA - ${env.BASE_IMAGE_AFFECTED}"
+                        if (env.BRANCH_NAME == "master") {
+                                echo "Master branch" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
+                                env.BASE_IMAGE_AFFECTED = sh(script: "git diff --name-only origin/master^ | grep -E '${BASE_IMAGE_TARGETS}' | wc -l", returnStdout: true)
+                                //echo "BIA - ${env.BASE_IMAGE_AFFECTED}"
+                            }
+                        else{
+                                echo "Non master branch" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
+                                env.BASE_IMAGE_AFFECTED = sh(script: "git diff --name-only origin/master | grep -E '${BASE_IMAGE_TARGETS}' | wc -l", returnStdout: true)      
                 }
             }
         }
