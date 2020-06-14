@@ -53,6 +53,7 @@ pipeline {
                         script {
                             if (env.BRANCH_NAME != "master") {
                                 echo "Non master" //env.BASE_IMAGE_TAG = env.GIT_COMMIT
+                                echo"Git-sha'{env.GIT_COMMIT}'"
                             }
                         }
                     }
