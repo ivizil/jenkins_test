@@ -47,7 +47,7 @@ pipeline {
                 stage("Build Base Image") {
                     steps {
                         script{
-                            echo "Build"
+                            base_image = 'docker.image'
                             
                         }
                         script {
@@ -67,7 +67,8 @@ pipeline {
                         stage("Base By Commit Tag") {
                            steps {
                                 script {
-                                    echo "push image " // base_image.push()
+                                    //echo "push image " // 
+                                    base_image.push(env.GIT_GIT_COMMIT)
                                 }
                            }
                         }
